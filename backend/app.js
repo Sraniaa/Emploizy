@@ -8,6 +8,20 @@ import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import path from 'path';
+
+// ...other imports and setup...
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('path-to-your-react-build-folder'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'path-to-your-react-build-folder', 'index.html'));
+  });
+}
+
+// ...rest of your Express server code...
+
 
 const app = express();
 config({ path: "./config/config.env" });

@@ -136,3 +136,42 @@ export const jobseekerDeleteApplication = catchAsyncErrors(
     });
   }
 );
+export const updateJobseekerApplication = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params; // Assume 'id' is the application ID
+  const { role, _id } = req.user;
+  
+  if (role !== "Chercheur d'emploi") {
+    return next(new ErrorHandler("Seul le chercheur d'emploi est autorisé à mettre à jour la candidature.", 400));
+  }
+  
+  const application = await Application.findOne({ _id: id, "applicantID.user": _id });
+  if (!application) {
+    return next(new ErrorHandler("Candidature non trouvée !", 404));
+  }
+
+  const fieldsToUpdate = req.body;
+  if (req.files && req.files.resume) {
+    const resumeFile = req.files.resume;
+    // Validate file type or other constraints here
+
+    const cloudinaryResponse = await cloudinary.uploader.upload(resumeFile.tempFilePath, {
+      folder: "resume_uploads" // assuming you want to organize in a folder
+    });
+    fieldsToUpdate.resume = {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url
+    };
+  }
+
+  const updatedApplication = await Application.findByIdAndUpdate(
+    id,
+    { $set: fieldsToUpdate },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Candidature mise à jour avec succès.",
+    application: updatedApplication
+  });
+});

@@ -2,139 +2,71 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import { Job } from "../models/jobSchema.js";
 import ErrorHandler from "../middlewares/error.js";
 
-export const getAllJobs = catchAsyncErrors(async (req, res, next) => {
+// Middleware to check if the user is an employer
+const checkEmployerRole = (req, res, next) => {
+  const { role } = req.user;
+  if (role !== "Employeur") {
+    return next(new ErrorHandler("Operation not allowed. Only employers are permitted.", 403));
+  }
+  next();
+};
+
+// Middleware to find a job by ID and attach it to the request
+const findJob = async (req, res, next) => {
+  const job = await Job.findById(req.params.id);
+  if (!job) {
+    return next(new ErrorHandler("Job not found.", 404));
+  }
+  req.job = job; // Attach job to request
+  next();
+};
+
+export const getAllJobs = catchAsyncErrors(async (req, res) => {
   const jobs = await Job.find({ expired: false });
-  res.status(200).json({
-    success: true,
-    jobs,
-  });
+  if (!jobs.length) {
+    throw new ErrorHandler("No jobs found.", 404);
+  }
+  res.status(200).json({ success: true, jobs });
 });
 
-export const postJob = catchAsyncErrors(async (req, res, next) => {
-  const { role } = req.user;
-  if (role === "Chercheur d'emploi") {
-    return next(
-      new ErrorHandler("Le chercheur d'emploi n'est pas autorisé à accéder à cette ressource.", 400)
-    );
-  }
-  const {
-    title,
-    description,
-    category,
-    country,
-    city,
-    location,
-    fixedSalary,
-    salaryFrom,
-    salaryTo,
-  } = req.body;
+export const postJob = [checkEmployerRole, catchAsyncErrors(async (req, res) => {
+  const { title, description, category, country, city, location, fixedSalary, salaryFrom, salaryTo } = req.body;
 
-  if (!title || !description || !category || !country || !city || !location) {
-    return next(new ErrorHandler("Veuillez fournir tous les détails du poste.", 400));
+  if (!title || !description || !category || !country || !city || !location ||
+      ((!salaryFrom || !salaryTo) && !fixedSalary) ||
+      (salaryFrom && salaryTo && fixedSalary)) {
+    throw new ErrorHandler("Please provide all required fields correctly.", 400);
   }
 
-  if ((!salaryFrom || !salaryTo) && !fixedSalary) {
-    return next(
-      new ErrorHandler(
-        "Veuillez fournir soit un salaire fixe, soit un salaire à plage.",
-        400
-      )
-    );
-  }
-
-  if (salaryFrom && salaryTo && fixedSalary) {
-    return next(
-      new ErrorHandler("Impossible de saisir un salaire fixe et à plage ensemble.", 400)
-    );
-  }
-  const postedBy = req.user._id;
   const job = await Job.create({
-    title,
-    description,
-    category,
-    country,
-    city,
-    location,
-    fixedSalary,
-    salaryFrom,
-    salaryTo,
-    postedBy,
+    ...req.body, postedBy: req.user._id
   });
-  res.status(200).json({
-    success: true,
-    message: "Emploi publié avec succès !",
-    job,
-  });
-});
 
-export const getMyJobs = catchAsyncErrors(async (req, res, next) => {
-  const { role } = req.user;
-  if (role === "Chercheur d'emploi") {
-    return next(
-      new ErrorHandler("Le chercheur d'emploi n'est pas autorisé à accéder à cette ressource.", 400)
-    );
-  }
+  res.status(201).json({ success: true, message: "Job posted successfully.", job });
+})];
+
+export const getMyJobs = [checkEmployerRole, catchAsyncErrors(async (req, res) => {
   const myJobs = await Job.find({ postedBy: req.user._id });
-  res.status(200).json({
-    success: true,
-    myJobs,
-  });
-});
+  if (!myJobs.length) {
+    throw new ErrorHandler("No published jobs found.", 404);
+  }
+  res.status(200).json({ success: true, myJobs });
+})];
 
-export const updateJob = catchAsyncErrors(async (req, res, next) => {
-  const { role } = req.user;
-  if (role === "Chercheur d'emploi") {
-    return next(
-      new ErrorHandler("Le chercheur d'emploi n'est pas autorisé à accéder à cette ressource.", 400)
-    );
-  }
-  const { id } = req.params;
-  let job = await Job.findById(id);
-  if (!job) {
-    return next(new ErrorHandler("OOPS ! Emploi non trouvé.", 404));
-  }
-  job = await Job.findByIdAndUpdate(id, req.body, {
+export const updateJob = [checkEmployerRole, findJob, catchAsyncErrors(async (req, res) => {
+  const updatedJob = await Job.findByIdAndUpdate(req.job._id, req.body, {
     new: true,
-    runValidators: true,
-    useFindAndModify: false,
+    runValidators: true
   });
-  res.status(200).json({
-    success: true,
-    message: "Emploi mis à jour !",
-  });
-});
 
-export const deleteJob = catchAsyncErrors(async (req, res, next) => {
-  const { role } = req.user;
-  if (role === "Chercheur d'emploi") {
-    return next(
-      new ErrorHandler("Le chercheur d'emploi n'est pas autorisé à accéder à cette ressource.", 400)
-    );
-  }
-  const { id } = req.params;
-  const job = await Job.findById(id);
-  if (!job) {
-    return next(new ErrorHandler("OOPS ! Emploi non trouvé.", 404));
-  }
-  await job.deleteOne();
-  res.status(200).json({
-    success: true,
-    message: "Emploi supprimé !",
-  });
-});
+  res.status(200).json({ success: true, message: "Job updated successfully.", job: updatedJob });
+})];
 
-export const getSingleJob = catchAsyncErrors(async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const job = await Job.findById(id);
-    if (!job) {
-      return next(new ErrorHandler("Emploi non trouvé.", 404));
-    }
-    res.status(200).json({
-      success: true,
-      job,
-    });
-  } catch (error) {
-    return next(new ErrorHandler(`ID invalide / CastError`, 404));
-  }
-});
+export const deleteJob = [checkEmployerRole, findJob, catchAsyncErrors(async (req, res) => {
+  await req.job.deleteOne();
+  res.status(200).json({ success: true, message: "Job deleted successfully." });
+})];
+
+export const getSingleJob = [findJob, catchAsyncErrors(async (req, res) => {
+  res.status(200).json({ success: true, job: req.job });
+})];

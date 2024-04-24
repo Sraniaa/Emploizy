@@ -4,19 +4,21 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Context } from "../../main";
 
+// Register component definition
 const Register = () => {
+  // State variables to store form inputs
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -32,20 +34,32 @@ const Register = () => {
         }
       );
       toast.success(data.message);
-      setName("");
-      setEmail("");
-      setPassword("");
-      setPhone("");
-      setRole("");
-      setIsAuthorized(true);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setPhone('');
+      setRole('');
+            // Navigate to login page after successful registration
+            navigate('/login');
     } catch (error) {
-      toast.error(error.response.data.message);
+      // Here's where the provided error handling code goes
+      if (error.response && error.response.data) {
+        const { message, errors } = error.response.data;
+        let errorMessage = message;
+  
+        // Check if there are individual errors and join them with new lines
+        if (errors && Array.isArray(errors) && errors.length > 0) {
+          errorMessage = errors.join('\n');
+        }
+  
+        // Display the error message
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
-
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
-  }
+  
 
 
   return (

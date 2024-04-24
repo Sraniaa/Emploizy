@@ -121,7 +121,7 @@ p {
 }
 .authPage .container form .inputTag div input,
 .authPage .container form .inputTag div select {
-  background: #87878778;
+  background: #800020;
   padding: 8px;
   border: none;
   width: 100%;
@@ -134,7 +134,7 @@ p {
 .authPage .container form .inputTag div svg {
   width: 10%;
   font-size: 1.5rem;
-  background: #2d5649;
+  background: #800020;
   height: 100%;
   padding: 8px;
   color: #fff;
@@ -146,17 +146,17 @@ p {
   margin-top: 25px;
   font-weight: 700;
   color: #fff;
-  background: #2d5649;
+  background: #800020;
   font-size: 1.2rem;
   border-radius: 7px;
 }
 .authPage .container form a {
   padding: 12px;
   text-align: center;
-  border: 1px solid #2d5649;
+  border: 1px solid #800020;
   margin-top: 25px;
   font-weight: 700;
-  color: #2d5649;
+  color: #800020;
   font-size: 1.2rem;
   text-decoration: none;
   border-radius: 7px;
@@ -214,7 +214,7 @@ p {
   color: #f1f3f6;
 }
 .footerShow div a:hover {
-  color: #2d5649;
+  color: #800020;
   transform: scale(1.2);
   transition: all 0.3s;
 }
@@ -296,7 +296,7 @@ p {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  color: #2d5649;
+  color: #800020;
 }
 .heroSection .details .card .content p:first-child {
   font-weight: bold;
@@ -401,7 +401,7 @@ p {
 }
 .howitworks .container .banner .card svg {
   font-size: 30px;
-  color: #2d5649;
+  color: #800020;
 }
 .howitworks .container .banner .card p:last-child {
   font-size: 14px;
@@ -448,7 +448,7 @@ p {
 }
 .categories .banner .card {
   width: 320px;
-  background: red;
+  background: #800020;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -465,7 +465,7 @@ p {
   font-size: 24px;
   padding: 10px;
   background: rgb(233, 249, 255);
-  color: #2d5649;
+  color: #800020;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -540,7 +540,7 @@ p {
 .companies .container .banner .card .content .icon {
   padding: 10px;
   font-size: 24px;
-  color: #2d5649;
+  color: #800020;
   background: rgb(233, 249, 255);
   display: flex;
   justify-content: center;
@@ -684,14 +684,14 @@ p {
 }
 .jobDetail .container .banner p {
   font-weight: bold;
-  color: #2d5649;
+  color: #800020;
 }
 .jobDetail .container .banner p span {
   color: #18191c;
   font-weight: 400;
 }
 .jobDetail .container .banner a {
-  background-color: #2d5649;
+  background-color: #800020;
   color: rgb(233, 249, 255);
   font-size: 20px;
   font-weight: 400;
@@ -745,7 +745,7 @@ p {
   outline: none;
 }
 .application .container form button {
-  background-color: #2d5649;
+  background-color: #800020;
   color: rgb(233, 249, 255);
   font-size: 20px;
   font-weight: 400;
@@ -755,7 +755,7 @@ p {
   width: 100%;
 }
 .application .container form button:hover {
-  background-color: #184235;
+  background-color: #800020;
   transition: all 0.3s;
   cursor: pointer;
 }
@@ -782,51 +782,93 @@ p {
 }
 .job_seeker_card {
   display: flex;
-  align-items: center;
-  border-bottom: 1px solid gainsboro;
-  padding: 20px 0;
-}
-.job_seeker_card .detail {
-  flex: 3;
-  display: flex;
   flex-direction: column;
-  gap: 5px;
-}
-.job_seeker_card .detail {
-  flex: 2;
-}
-.job_seeker_card .detail span {
-  font-weight: bold;
-}
-.job_seeker_card .resume {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.job_seeker_card .resume {
-  position: relative;
-  height: 250px;
-}
-.job_seeker_card .resume img {
-  width: auto;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.job_seeker_card .btn_area {
-  flex: 1;
-  display: flex;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   align-items: center;
+}
+
+.job_seeker_card .detail,
+.job_seeker_card .resume {
+  width: 100%;
+}
+
+.job_seeker_card .resume {
+  margin-top: 20px;
+  display: flex;
   justify-content: center;
+  align-items: center;
 }
-.job_seeker_card .btn_area button {
-  background: #d9534f;
-  color: #fff;
+
+.job_seeker_card .resume img {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+}
+
+.job_seeker_card .button_wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.job_seeker_card .button_wrapper .edit_btn,
+.job_seeker_card .button_wrapper .delete_btn {
+  padding: 10px 15px;
+  color: white;
   border: none;
-  padding: 10px 30px;
-  font-size: 20px;
   font-weight: 500;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.job_seeker_card .button_wrapper .edit_btn {
+  background-color: #D8CAB8;
+}
+
+.job_seeker_card .button_wrapper .edit_btn:hover {
+  background-color: #D8CAB8;
+}
+
+.job_seeker_card .button_wrapper .delete_btn {
+  background-color: #D8CAB8;
+}
+
+.job_seeker_card .button_wrapper .delete_btn:hover {
+  background-color: #D8CAB8;
+}
+
+/* Media queries */
+@media (max-width: 1520px) {
+  h1 {
+    font-size: 3.4rem;
+  }
+  /* ... and so on for other headings ... */
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.6rem;
+  }
+  /* ... and so on for other headings ... */
+
+  .job_seeker_card {
+    flex-direction: column;
+  }
+
+  .job_seeker_card .detail,
+  .job_seeker_card .resume {
+    width: auto;
+  }
+
+  .job_seeker_card .button_wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 @media (max-width: 1520px) {
   .my_applications .container {
@@ -925,7 +967,7 @@ p {
   gap: 10px;
 }
 .job_post .container form .salary_wrapper p {
-  color: #d9534f;
+  color: #D8CAB8;
   font-size: 14px;
   font-weight: 300;
 }
@@ -943,7 +985,7 @@ p {
 }
 .job_post .container form button {
   width: 100%;
-  background: #2d5649;
+  background: #800020;
   font-size: 20px;
   padding: 10px 30px;
   border: none;
@@ -1083,16 +1125,16 @@ p {
   text-transform: uppercase;
   padding: 7px;
   border: none;
-  background: #ffc107;
+  background: #D8CAB8;
 }
 .myJobs .container .banner .card .button_wrapper .delete_btn {
-  background: #d9534f;
+  background: #D8CAB8;
   color: #f1f3f6;
 }
 .myJobs .container .banner .card .button_wrapper .check_btn {
   background: transparent;
-  color: #184235;
-  border: 1px solid #184235;
+  color: #800020;
+  border: 1px solid #800020;
   border-radius: 7px;
   width: 50px;
   padding: 8px;
@@ -1103,13 +1145,13 @@ p {
 }
 .myJobs .container .banner .card .button_wrapper .check_btn:hover {
   transition: all 0.3s;
-  background: #184235;
+  background: #800020;
   color: #f1f3f6;
 }
 .myJobs .container .banner .card .button_wrapper .cross_btn {
   background: transparent;
-  color: #d9534f;
-  border: 1px solid #d9534f;
+  color: #D8CAB8;
+  border: 1px solid #D8CAB8;
   border-radius: 7px;
   width: 50px;
   padding: 8px;
@@ -1120,7 +1162,7 @@ p {
 }
 .myJobs .container .banner .card .button_wrapper .cross_btn:hover {
   transition: all 0.3s;
-  background: #d9534f;
+  background: #D8CAB8;
   color: #f1f3f6;
 }
 .myJobs .container .banner .card .button_wrapper .edit_btn_wrapper {
@@ -1183,11 +1225,11 @@ nav .menu button {
 }
 nav .menu button:hover {
   color: #f1f3f6;
-  background: #184235;
+  background: #800020;
   transition: all 0.3s;
   cursor: pointer;
   font-weight: 500;
-  border: 1px solid #184235;
+  border: 1px solid #800020;
 }
 nav .menu li a {
   color: #f1f3f6;
@@ -1197,13 +1239,13 @@ nav .menu li a {
   position: relative;
 }
 nav .menu li a:hover {
-  color: #2d5649;
+  color: #800020;
   transition: all 0.3s;
 }
 nav .menu li a::before {
   content: "";
   position: absolute;
-  background: #184235;
+  background: #800020;
   height: 1px;
   width: 100%;
   left: -100%;
@@ -1273,11 +1315,11 @@ nav .hamburger {
     -moz-box-shadow: 9px 0px 16px 0px rgba(0, 0, 0, 0.75);
   }
   nav .show-menu li a {
-    color: #184235;
+    color: #800020;
     font-weight: 600;
   }
   nav .show-menu button {
-    color: #184235;
+    color: #800020;
     border: 1px solid #184235;
     font-weight: 600;
   }
@@ -1304,12 +1346,12 @@ nav .hamburger {
   font-weight: 500;
   padding: 7px 30px;
   background: transparent;
-  border: 1px solid #184235;
-  color: #184235;
+  border: 1px solid #800020;
+  color: #800020;
   text-decoration: none;
 }
 .notfound .content a:hover {
-  background: #184235;
+  background: #800020;
   transition: all 0.3s;
   color: #f1f3f6;
 }
@@ -1335,7 +1377,7 @@ nav .hamburger {
   right: 36px;
   top: 35px;
   font-size: 50px;
-  color: #d9534f;
+  color: #D8CAB8;
 }
 .resume-modal .modal-content .close:hover {
   cursor: pointer;
@@ -1349,3 +1391,67 @@ nav .hamburger {
     z-index: 11;
   }
 }
+
+.job_seeker_card {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns: details and CV */
+  gap: 20px;
+  background: #ffffff; /* Assuming a white card background */
+  padding: 20px;
+  border-radius: 10px; /* Optional: if you want rounded corners */
+  margin-bottom: 30px; /* Space between cards */
+  align-items: start; /* Aligns items to the start of the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: for some shadow */
+}
+
+.job_seeker_card .detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+
+
+.job_seeker_card .button_wrapper {
+  grid-column: 1 / -1; /* Span full width */
+  display: flex;
+  justify-content: space-between; /* Adjust this as needed */
+  padding: 10px 0;
+}
+
+
+/* Modifier button styling to match MyJobs */
+.job_seeker_card .button_wrapper .edit_btn {
+  background: #D8CAB8; /* Yellow background */
+  color: #18191c; /* Black text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.job_seeker_card .button_wrapper .edit_btn:hover {
+  background: #D8CAB8; /* Darker yellow on hover */
+}
+
+/* Supprimer button styling to match MyJobs */
+.job_seeker_card .button_wrapper .delete_btn {
+  background: #D8CAB8; /* Red background */
+  color: white; /* White text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.job_seeker_card .button_wrapper .delete_btn:hover {
+  background: #D8CAB8; /* Darker red on hover */
+}
+

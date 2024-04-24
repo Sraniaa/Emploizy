@@ -32,18 +32,18 @@ const jobSchema = new mongoose.Schema({
   },
   fixedSalary: {
     type: Number,
-    minLength: [4, "Le salaire doit contenir au moins 4 chiffres"],
-    maxLength: [9, "Le salaire ne peut pas dépasser 9 chiffres"],
+    min: [100, "Le salaire doit contenir au moins 3 chiffres"],
+    max: [999999999, "Le salaire ne peut pas dépasser 9 chiffres"],
   },
   salaryFrom: {
     type: Number,
-    minLength: [4, "Le salaire doit contenir au moins 4 chiffres"],
-    maxLength: [9, "Le salaire ne peut pas dépasser 9 chiffres"],
+    min: [100, "Le salaire doit contenir au moins 3 chiffres"],
+    max: [999999999, "Le salaire ne peut pas dépasser 9 chiffres"],
   },
   salaryTo: {
     type: Number,
-    minLength: [4, "Le salaire doit contenir au moins 4 chiffres"],
-    maxLength: [9, "Le salaire ne peut pas dépasser 9 chiffres"],
+    min: [100, "Le salaire doit contenir au moins 3 chiffres"],
+    max: [999999999, "Le salaire ne peut pas dépasser 9 chiffres"],
   },
   expired: {
     type: Boolean,
